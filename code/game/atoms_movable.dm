@@ -811,3 +811,19 @@
 	if(anchored || throwing)
 		return FALSE
 	return TRUE
+
+
+/atom/movable/proc/scp914_rough()
+	return
+
+/atom/movable/proc/scp914_coarse()
+	return
+
+/atom/movable/proc/scp914_one()
+	return
+
+/atom/movable/proc/scp914_fine()
+	return
+
+/atom/movable/proc/scp914_vfine()
+	return
