@@ -131,6 +131,18 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
+/obj/item/toy/spinningtoy/scp914_fine()
+	var/list/candidates = list(/obj/machinery/the_singularitygen/tesla, /obj/machinery/the_singularitygen, /obj/item/am_containment)
+	var/candidate = pick(candidates)
+	var/obj/result = new candidate(loc)
+	return result
+
+/obj/item/toy/spinningtoy/scp914_vfine()
+	var/list/candidates = list(/obj/singularity/energy_ball, /obj/singularity, /obj/singularity/narsie)
+	var/candidate = pick(candidates)
+	var/obj/result = new candidate(loc)
+	return result
+
 /*
  * Toy gun: Why isnt this an /obj/item/gun?
  */
@@ -192,6 +204,19 @@
 						"<span class='danger'>You fire [src] at [target]!</span>", \
 						 "<span class='italics'>You hear a gunshot!</span>")
 
+/obj/item/toy/gun/scp914_fine()
+	var/candidate = pick(subtypesof(/obj/item/gun/ballistic))
+	if(prob(50))
+		candidate = pick(subtypesof(/obj/item/gun/energy))
+	var/obj/result = new candidate(loc)
+	return result
+
+/obj/item/toy/gun/scp914_vfine()
+	var/list/candidates = list(subtypesof(/obj/item/gun/magic))
+	var/candidate = pick(candidates)
+	var/obj/result = new candidate(loc)
+	return result
+
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
@@ -207,6 +232,17 @@
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
 	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
+
+/obj/item/toy/ammo/gun/scp914_fine()
+	var/candidate = pick(subtypesof(/obj/item/ammo_box))
+	var/obj/result = new candidate(loc)
+	return result
+
+/obj/item/toy/ammo/gun/scp914_vfine()
+	var/list/candidates = list(subtypesof(/obj/effect/mine/pickup))
+	var/candidate = pick(candidates)
+	var/obj/result = new candidate(loc)
+	return result
 
 /*
  * Toy swords
@@ -272,6 +308,16 @@
 	else
 		return ..()
 
+/obj/item/toy/sword/scp914_fine()
+	var/candidate = pick(subtypesof(/obj/item/melee))
+	var/obj/result = new candidate(loc)
+	return result
+
+/obj/item/toy/sword/scp914_vfine()
+	var/candidate = pick(subtypesof(/obj/item/melee/transforming/energy/sword))
+	var/obj/result = new candidate(loc)
+	return result
+
 /*
  * Foam armblade
  */
@@ -311,6 +357,15 @@
 /obj/item/toy/windupToolbox/proc/stopRumble()
 	icon_state = initial(icon_state)
 	active = FALSE
+
+/obj/item/toy/windupToolbox/scp914_fine()
+	var/candidate = pick(subtypesof(/obj/item/storage/toolbox))
+	var/obj/result = new candidate(loc)
+	return result
+
+/obj/item/toy/windupToolbox/scp914_vfine()
+	var/obj/result = new /obj/item/his_grace(loc)
+	return result
 
 /*
  * Subtype of Double-Bladed Energy Swords

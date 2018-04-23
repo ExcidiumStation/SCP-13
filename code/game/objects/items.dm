@@ -762,3 +762,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
 /obj/item/proc/get_part_rating()
 	return 0
+
+/obj/item/scp914_rough()
+	if(materials.len == 0)
+		return
+	for(var/material in materials)
+		for(var/mat_type in subtypesof(/datum/material))
+			var/datum/material/MT = new mat_type
+			if(MT.id == material && MT.sheet_type)
+				var/obj/item/stack/sheet/S = new MT.sheet_type(loc)
+				return S
