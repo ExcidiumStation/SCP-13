@@ -82,10 +82,16 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
 		return
   decrease_mode(usr)
 
-/obj/structure/scp914/CtrlClick(var/mob/user)
+/obj/structure/scp914/CtrlClick(mob/user)
+  . = ..()
+  if(.)
+    return
   increase_mode(user)
 
-/obj/structure/scp914/AltClick(var/mob/user)
+/obj/structure/scp914/AltClick(mob/user)
+  . = ..()
+  if(.)
+    return
   decrease_mode(user)
 
 /obj/structure/scp914/proc/increase_mode(var/mob/user)
@@ -127,12 +133,15 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
   return timer
 
 /obj/structure/scp914/attack_hand(mob/user)
+  . = ..()
+  if(.)
+    return
   if(processing)
     to_chat(user, "It's no use - machine is processing right now!")
     return
-  start_processsing()
+  start_process()
 
-/obj/structure/scp914/proc/start_processsing()
+/obj/structure/scp914/proc/start_process()
   intake.close()
   outputter.close()
   var/time = get_timer()
