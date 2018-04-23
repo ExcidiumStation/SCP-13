@@ -28,15 +28,15 @@
 		damage_coeff = CLAMP((5000-(world.time - victims[ML]))/1000,1,5)
 		ML.apply_damage(10*damage_coeff, BURN, which_hand) //administer damage
 		ML.apply_damage(30*damage_coeff, TOX, which_hand)
-	addtimer(CALLBACK(.proc/phase_one, ML), 200)
+	addtimer(CALLBACK(src, .proc/phase_one, ML), 200)
 
 /datum/component/gender_swap/proc/phase_one(mob/living/victim)
 	to_chat(victim, "<span class='warning'>Bones begin to shift and grind inside of you, and every single one of your nerves seems like it's on fire.</span>")
-	addtimer(CALLBACK(.proc/phase_two, victim), 210)
+	addtimer(CALLBACK(src, .proc/phase_two, victim), 210)
 
 /datum/component/gender_swap/proc/phase_two(mob/living/victim)
 	to_chat(victim, "<span class='notice'>\The [victim] starts to scream and writhe in pain as their bone structure reforms.</span>")
-	addtimer(CALLBACK(.proc/phase_three, victim), 300)
+	addtimer(CALLBACK(src, .proc/phase_three, victim), 300)
 
 /datum/component/gender_swap/proc/phase_three(mob/living/victim)
 	if(victim.gender == FEMALE) //swap genders
@@ -47,7 +47,7 @@
 		var/mob/living/carbon/human/H = victim
 		H.update_hair()
 		H.update_body()
-	addtimer(CALLBACK(.proc/swap_finish, victim), 300)
+	addtimer(CALLBACK(src, .proc/swap_finish, victim), 300)
 
 /datum/component/gender_swap/proc/swap_finish(mob/living/victim)
 	var/obj/item/A = parent
