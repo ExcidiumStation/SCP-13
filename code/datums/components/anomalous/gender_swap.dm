@@ -26,8 +26,8 @@
 	var/damage_coeff = 1
 	if(ML in victims)
 		damage_coeff = CLAMP((5000-(world.time - victims[ML]))/1000,1,5)
-		ML.apply_damage(10*damage_coeff, BURN, which_hand) //administer damage
-		ML.apply_damage(30*damage_coeff, TOX, which_hand)
+	ML.apply_damage(10*damage_coeff, BURN, which_hand) //administer damage
+	ML.apply_damage(30*damage_coeff, TOX, which_hand)
 	addtimer(CALLBACK(src, .proc/phase_one, ML), 200)
 
 /datum/component/gender_swap/proc/phase_one(mob/living/victim)
@@ -52,6 +52,6 @@
 /datum/component/gender_swap/proc/swap_finish(mob/living/victim)
 	var/obj/item/A = parent
 	to_chat(victim, "<span class='warning'>The burning begins to fade, and you feel your hand relax it's grip on the [A].</span>")
-	victims[victim] = world.time
 	A.flags_1 &= ~NODROP_1
 	A.w_class = old_wclass
+	victims[victim] = world.time
