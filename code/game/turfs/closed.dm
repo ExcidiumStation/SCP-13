@@ -3,6 +3,7 @@
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
+	slowdown = 2
 
 /turf/closed/ComponentInitialize()
 	. = ..()

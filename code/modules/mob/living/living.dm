@@ -523,7 +523,7 @@
 /mob/living/movement_delay(ignorewalk = 0)
 	. = 0
 	if(isopenturf(loc) && !is_flying())
-		var/turf/open/T = loc
+		var/turf/T = loc
 		. += T.slowdown
 	var/static/datum/config_entry/number/run_delay/config_run_delay
 	var/static/datum/config_entry/number/walk_delay/config_walk_delay
