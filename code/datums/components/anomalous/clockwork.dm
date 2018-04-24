@@ -31,7 +31,6 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
 	var/icon = 'icons/obj/scp914.dmi'
 	var/obj/structure/closet/scp914/int/intake
 	var/obj/structure/closet/scp914/out/outputter
-	var/mode = CLOCKMODE_ROUGH
 	var/processing = FALSE
 
 /datum/component/clockwork/Initialize()
@@ -44,8 +43,8 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
 	var/atom/movable/A = parent
 	A.anchored = 1
 	A.density = 1
-  var/intake_loc = A.locate(x-1,y,z)
-	var/output_loc = A.locate(x+1,y,z)
+  var/intake_loc = locate(A.x-1,A.y,A.z)
+	var/output_loc = locate(A.x+1,A.y,A.z)
 	intake = new /obj/structure/closet/scp914/int(intake_loc)
 	outputter = new /obj/structure/closet/scp914/out(output_loc)
 	change_switch_icon(parent)
