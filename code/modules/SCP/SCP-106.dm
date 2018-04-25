@@ -1,49 +1,10 @@
-/datum/species/scp106
-	name = "106"
-	id = "larry"
-	species_traits = list(NOBLOOD,NOEYES,NO_UNDERWEAR)
-	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH,TRAIT_RESISTHEAT,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_NOHUNGER,TRAIT_NOSLIPWATER,TRAIT_SHOCKIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_ANTIMAGIC)
-	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
-	//mutant_organs = list(/obj/item/organ/adamantine_resonator)
-	armor = 3000
-	siemens_coeff = 0
-	punchdamagelow = 5
-	punchdamagehigh = 14
-	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
-	nojumpsuit = 1
-	sexes = 0
-	damage_overlay_type = ""
-	//meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
-	blacklisted = TRUE
-	dangerous_existence = TRUE
-	fixed_mut_color = "000"
-	var/obj/effect/proc_holder/spell/targeted/touch/teleport_victim/touch
-	var/obj/effect/proc_holder/spell/targeted/teleport/tele
-
-/datum/species/scp106/random_name(gender,unique,lastname)
-	return "old man"
-
-/datum/species/scp106/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	C.AddComponent(/datum/component/pass_through)
-	if(ishuman(C))
-		C.mind.AddSpell(new touch)
-		C.mind.AddSpell(new tele)
-
-/datum/species/scp106/on_species_loss(mob/living/carbon/C)
-	if(touch)
-		C.mind.RemoveSpell(touch)
-	if(tele)
-		C.mind.RemoveSpell(tele)
-	..()
-
 /obj/effect/proc_holder/spell/targeted/touch/teleport_victim
 	name = "Teleport Victim"
 	desc = "Charges your hand with dark energy that can be used to teleport victims into your realm."
 	hand_path = "/obj/item/melee/touch_attack/touchby106"
 	cooldown_min = 200
 	action_icon_state = "gib"
+	clothes_req = 0
 
 /obj/item/melee/touch_attack/touchby106
 	name = "\improper teleporting touch"
@@ -52,6 +13,7 @@
 	on_use_sound = 'sound/magic/disintegrate.ogg'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
+
 //TODO: Realm and shit
 /obj/item/melee/touch_attack/touchby106/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
@@ -82,13 +44,14 @@
 	name = "To Realm"
 	desc = "This spell teleports you to a type of area of your selection."
 	nonabstract_req = 1
+	clothes_req = 0
 
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
 	var/sound1 = 'sound/weapons/zapbang.ogg'
 	var/sound2 = 'sound/weapons/zapbang.ogg'
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
+/obj/effect/proc_holder/spell/targeted/teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
 	var/thearea = before_cast(targets)
 	if(!thearea || !cast_check(1))
 		revert_cast()
@@ -99,7 +62,7 @@
 	cast(targets,thearea,user)
 	after_cast(targets)
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/teleport/before_cast(list/targets)
 	var/A = null
 
 	if(!randomise_selection)
@@ -112,7 +75,7 @@
 
 	return thearea
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/teleport/cast(list/targets,area/thearea,mob/user = usr)
 	playsound(get_turf(user), sound1, 50,1)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
@@ -151,7 +114,7 @@
 
 	return
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/teleport/invocation(area/chosenarea = null,mob/user = usr)
 	if(!invocation_area || !chosenarea)
 		..()
 	else
@@ -166,3 +129,46 @@
 				user.whisper("[invocation] [uppertext(chosenarea.name)]")
 
 	return
+
+
+/datum/species/scp106
+	name = "106"
+	id = "larry"
+	species_traits = list(NOBLOOD,NOEYES,NO_UNDERWEAR)
+	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH,TRAIT_RESISTHEAT,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_NOHUNGER,TRAIT_NOSLIPWATER,TRAIT_SHOCKIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_ANTIMAGIC)
+	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	//mutant_organs = list(/obj/item/organ/adamantine_resonator)
+	armor = 3000
+	siemens_coeff = 0
+	punchdamagelow = 5
+	punchdamagehigh = 14
+	punchstunthreshold = 11 //about 40% chance to stun
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	nojumpsuit = 1
+	sexes = 0
+	damage_overlay_type = ""
+	//meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
+	blacklisted = TRUE
+	dangerous_existence = TRUE
+	fixed_mut_color = "111"
+	var/obj/effect/proc_holder/spell/targeted/touch/teleport_victim/touch
+	var/obj/effect/proc_holder/spell/targeted/teleport/tele
+
+/datum/species/scp106/random_name(gender,unique,lastname)
+	return "old man"
+
+/datum/species/scp106/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.AddComponent(/datum/component/pass_through)
+	if(ishuman(C))
+		touch = new /obj/effect/proc_holder/spell/targeted/touch/teleport_victim
+		tele = new /obj/effect/proc_holder/spell/targeted/teleport
+		C.mind.AddSpell(touch)
+		C.mind.AddSpell(tele)
+
+/datum/species/scp106/on_species_loss(mob/living/carbon/C)
+	if(touch)
+		C.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/touch/teleport_victim)
+	if(tele)
+		C.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/teleport)
+	..()
