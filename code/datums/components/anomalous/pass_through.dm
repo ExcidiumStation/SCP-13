@@ -17,3 +17,13 @@
 
 /datum/component/pass_through/pass_through(var/atom/A)
 	A.acid_act(5,10)
+	if(!ishuman(parent))
+		return
+	if(ismecha(A))
+		S.speedmod += 1
+	if(isstructure(A))
+		S.speedmod += 2
+	if(ismachinery(A))
+		S.speedmod += 3
+	var/mob/living/carbon/human/H = parent
+	var/datum/species/S = H.dna.species
