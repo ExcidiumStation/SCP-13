@@ -18,8 +18,8 @@
 	blacklisted = TRUE
 	dangerous_existence = TRUE
 	fixed_mut_color = "000"
-	var/datum/action/cooldown/touchby106/touch
-	var/datum/action/cooldown/teleport106/teleport
+	var/obj/effect/proc_holder/spell/targeted/touch/teleport_victim/touch
+	var/obj/effect/proc_holder/spell/targeted/teleport/tele
 
 /datum/species/scp106/random_name(gender,unique,lastname)
 	return "old man"
@@ -28,18 +28,141 @@
 	..()
 	C.AddComponent(/datum/component/pass_through)
 	if(ishuman(C))
-		touch = new
-		teleport = new
-		touch.Grant(C)
-		teleport.Grant(C)
+		C.mind.AddSpell(new touch)
+		C.mind.AddSpell(new tele)
 
 /datum/species/scp106/on_species_loss(mob/living/carbon/C)
 	if(touch)
-		touch.Remove(C)
-	if(teleport)
-		teleport.Remove(C)
+		C.mind.RemoveSpell(touch)
+	if(tele)
+		C.mind.RemoveSpell(tele)
 	..()
 
-/datum/action/cooldown/touchby106 //TODO
+/obj/effect/proc_holder/spell/targeted/touch/teleport_victim
+	name = "Teleport Victim"
+	desc = "Charges your hand with dark energy that can be used to teleport victims into your realm."
+	hand_path = "/obj/item/melee/touch_attack/touchby106"
+	cooldown_min = 200
+	action_icon_state = "gib"
 
-/datum/action/cooldown/teleport106 //TODO
+/obj/item/melee/touch_attack/touchby106
+	name = "\improper teleporting touch"
+	desc = "Teleports victim into your realm"
+	catchphrase = "ha...ha...hh..."
+	on_use_sound = 'sound/magic/disintegrate.ogg'
+	icon_state = "disintegrate"
+	item_state = "disintegrate"
+//TODO: Realm and shit
+/obj/item/melee/touch_attack/touchby106/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
+		return
+	var/mob/M = target
+	do_sparks(4, FALSE, M.loc)
+	for(var/mob/living/L in view(src, 7))
+		if(L != user)
+			L.flash_act(affect_silicon = FALSE)
+	var/atom/A = M.anti_magic_check()
+	if(A)
+		if(isitem(A))
+			target.visible_message("<span class='warning'>[target]'s [A] glows brightly as it wards off the spell!</span>")
+		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<span class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
+		user.flash_act()
+		var/obj/item/bodypart/part
+		var/index = user.get_held_index_of_item(src)
+		if(index)
+			part = user.hand_bodyparts[index]
+		if(part)
+			part.dismember()
+		..()
+		return
+	M.gib()
+	..()
+
+/obj/effect/proc_holder/spell/targeted/teleport
+	name = "To Realm"
+	desc = "This spell teleports you to a type of area of your selection."
+	nonabstract_req = 1
+
+	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
+	var/invocation_area = 1 //if the invocation appends the selected area
+	var/sound1 = 'sound/weapons/zapbang.ogg'
+	var/sound2 = 'sound/weapons/zapbang.ogg'
+
+/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
+	var/thearea = before_cast(targets)
+	if(!thearea || !cast_check(1))
+		revert_cast()
+		return
+	invocation(thearea,user)
+	if(charge_type == "recharge" && recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge)
+	cast(targets,thearea,user)
+	after_cast(targets)
+
+/obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
+	var/A = null
+
+	if(!randomise_selection)
+		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
+	else
+		A = pick(GLOB.teleportlocs)
+	if(!A)
+		return
+	var/area/thearea = GLOB.teleportlocs[A]
+
+	return thearea
+
+/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea,mob/user = usr)
+	playsound(get_turf(user), sound1, 50,1)
+	for(var/mob/living/target in targets)
+		var/list/L = list()
+		for(var/turf/T in get_area_turfs(thearea.type))
+			if(!T.density)
+				var/clear = 1
+				for(var/obj/O in T)
+					if(O.density)
+						clear = 0
+						break
+				if(clear)
+					L+=T
+
+		if(!L.len)
+			to_chat(usr, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
+			return
+
+		if(target && target.buckled)
+			target.buckled.unbuckle_mob(target, force=1)
+
+		var/list/tempL = L
+		var/attempt = null
+		var/success = 0
+		while(tempL.len)
+			attempt = pick(tempL)
+			target.Move(attempt)
+			if(get_turf(target) == attempt)
+				success = 1
+				break
+			else
+				tempL.Remove(attempt)
+
+		if(!success)
+			target.forceMove(L)
+			playsound(get_turf(user), sound2, 50,1)
+
+	return
+
+/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/user = usr)
+	if(!invocation_area || !chosenarea)
+		..()
+	else
+		switch(invocation_type)
+			if("shout")
+				user.say("[invocation] [uppertext(chosenarea.name)]")
+				if(user.gender==MALE)
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+				else
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+			if("whisper")
+				user.whisper("[invocation] [uppertext(chosenarea.name)]")
+
+	return
