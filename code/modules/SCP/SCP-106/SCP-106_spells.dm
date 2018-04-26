@@ -4,6 +4,7 @@
 	hand_path = "/obj/item/melee/touch_attack/touchby106"
 	cooldown_min = 20
 	action_icon_state = "gib"
+	nonabstract_req = 1
 	clothes_req = 0
 
 /obj/item/melee/touch_attack/touchby106
@@ -20,10 +21,16 @@
 		return
 	var/atom/movable/AM = target
 	do_sparks(4, FALSE, AM.loc)
+	user.say(catchphrase)
+	playsound(get_turf(user), on_use_sound,50,1)
 	AM.forceMove(pick(GLOB.larryrealm))
+	if(attached_spell)
+		attached_spell.attached_hand = null
+	qdel(src)
 
 
-/obj/effect/proc_holder/spell/targeted/teleport
+
+/obj/effect/proc_holder/spell/teleport
 	name = "Plane Shift"
 	desc = "Changes current plane of existance."
 	nonabstract_req = 1
@@ -34,7 +41,7 @@
 	var/sound1 = 'sound/weapons/zapbang.ogg'
 	var/sound2 = 'sound/weapons/zapbang.ogg'
 
-/obj/effect/proc_holder/spell/targeted/teleport/perform(recharge = 1,mob/living/user = usr)
+/obj/effect/proc_holder/spell/teleport/perform(recharge = 1,mob/living/user = usr)
 	if(!cast_check(1))
 		revert_cast()
 		return
@@ -45,7 +52,7 @@
 		return_loc = get_turf(user)
 	cast(user)
 
-/obj/effect/proc_holder/spell/targeted/teleport/cast(mob/user = usr)
+/obj/effect/proc_holder/spell/teleport/cast(mob/user = usr)
 	if(returning)
 		user.forceMove(get_turf(return_loc))
 		returning = FALSE

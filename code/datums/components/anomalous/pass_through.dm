@@ -20,9 +20,8 @@
 	var/move_delay = get_move_delay(A)
 	if(do_after(M, move_delay, target = A))
 		A.acid_act(5,10) //TODO: special acid?
-		A.density = FALSE
-		step(M, get_dir(M, A.loc))
-		A.density = TRUE
+		spawn(2)
+		M.forceMove(get_turf(A))
 	passing = FALSE
 
 /datum/component/pass_through/proc/get_move_delay(var/atom/A)

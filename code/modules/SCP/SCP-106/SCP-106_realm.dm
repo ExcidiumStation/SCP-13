@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(larrykillplates)
 
 /turf/open/indestructible/necropolis/air/realm/casino/Initialize()
 	. = ..()
-	GLOB.larryrealm += src
+	GLOB.larrykillplates += src
 
 /turf/open/indestructible/necropolis/air/realm/casino/Entered(var/mob/AM)
 	..()

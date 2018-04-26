@@ -45,8 +45,10 @@
 		victim.gender = FEMALE
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim
-		H.update_hair()
+		H.hair_style = random_hair_style(H.gender)
+		H.facial_hair_style = random_facial_hair_style(H.gender)
 		H.update_body()
+		H.update_hair()
 	addtimer(CALLBACK(src, .proc/swap_finish, victim), 300)
 
 /datum/component/gender_swap/proc/swap_finish(mob/living/victim)
