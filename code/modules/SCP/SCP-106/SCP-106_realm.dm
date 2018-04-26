@@ -28,9 +28,9 @@ GLOBAL_LIST_EMPTY(larrykillplates)
 		wow_you_lucky(AM)
 
 /turf/open/indestructible/necropolis/air/realm/casino/proc/wow_you_lucky(var/mob/user)
-	var/return_area
-	return_area = input("Area to land", "Select a Zone to return", target_area) in GLOB.teleportlocs
-	var/area/picked_area = GLOB.teleportlocs[target_area]
+	var/return_area = null
+	return_area = input("Area to land", "Select a Zone to return", return_area) in GLOB.teleportlocs
+	var/area/picked_area = GLOB.teleportlocs[return_area]
 	if(!user || QDELETED(user))
 		return
 
@@ -64,4 +64,4 @@ GLOBAL_LIST_EMPTY(larrykillplates)
 	if(!success)
 		user.forceMove(L)
 		playsound(get_turf(user), sound2, 50,1)
-return
+	return
