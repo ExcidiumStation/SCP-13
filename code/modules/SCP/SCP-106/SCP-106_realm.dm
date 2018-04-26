@@ -63,5 +63,4 @@ GLOBAL_LIST_EMPTY(larrykillplates)
 
 	if(!success)
 		user.forceMove(L)
-		playsound(get_turf(user), sound2, 50,1)
 	return
