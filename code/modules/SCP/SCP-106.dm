@@ -131,8 +131,8 @@
 	return
 
 
-/datum/species/scp106
-	name = "106"
+/datum/species/shadow/scp106
+	name = "SCP-106"
 	id = "larry"
 	species_traits = list(NOBLOOD,NOEYES,NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH,TRAIT_RESISTHEAT,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_NOHUNGER,TRAIT_NOSLIPWATER,TRAIT_SHOCKIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_ANTIMAGIC)
@@ -150,14 +150,21 @@
 	//meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	blacklisted = TRUE
 	dangerous_existence = TRUE
-	fixed_mut_color = "111"
 	var/obj/effect/proc_holder/spell/targeted/touch/teleport_victim/touch
 	var/obj/effect/proc_holder/spell/targeted/teleport/tele
 
-/datum/species/scp106/random_name(gender,unique,lastname)
+/datum/species/shadow/scp106/random_name(gender,unique,lastname)
 	return "old man"
 
-/datum/species/scp106/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/shadow/scp106/spec_life(mob/living/carbon/human/H)
+	if(H.has_trait(TRAIT_NOBREATH))
+		H.setOxyLoss(0)
+		H.losebreath = 0
+
+		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
+		if((H.health < HEALTH_THRESHOLD_CRIT) && takes_crit_damage)
+			H.adjustBruteLoss(1)
+/datum/species/shadow/scp106/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	C.AddComponent(/datum/component/pass_through)
 	if(ishuman(C))
@@ -166,9 +173,9 @@
 		C.mind.AddSpell(touch)
 		C.mind.AddSpell(tele)
 
-/datum/species/scp106/on_species_loss(mob/living/carbon/C)
+/datum/species/shadow/scp106/on_species_loss(mob/living/carbon/C)
 	if(touch)
-		C.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/touch/teleport_victim)
+		C.mind.RemoveSpell(touch)
 	if(tele)
-		C.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/teleport)
+		C.mind.RemoveSpell(tele)
 	..()
