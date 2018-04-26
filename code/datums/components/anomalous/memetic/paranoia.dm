@@ -8,7 +8,7 @@
 	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/give_paranoia)
 
 /datum/component/paranoid/proc/give_paranoia(var/mob/M)
-	if(!iscarbon(C))
+	if(!iscarbon(M))
 		to_chat(M, "You see nothing strange about that thing.")
 		return
 	var/mob/living/carbon/C = M
