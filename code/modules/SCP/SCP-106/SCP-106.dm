@@ -31,9 +31,12 @@
 		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
 		if((H.health < HEALTH_THRESHOLD_CRIT) && takes_crit_damage)
 			H.adjustBruteLoss(1)
+
 /datum/species/shadow/scp106/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	C.AddComponent(/datum/component/pass_through)
+	var/turf/open/indestructible/necropolis/air/realm/casino/bingo = pick(GLOB.larrykillplates)
+	bingo.lucky = TRUE
 	if(ishuman(C))
 		touch = new /obj/effect/proc_holder/spell/targeted/touch/teleport_victim
 		tele = new /obj/effect/proc_holder/spell/targeted/teleport
