@@ -1,7 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1
-
+	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
 
 	// baseturfs can be either a list or a single turf type.

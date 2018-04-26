@@ -1,5 +1,4 @@
 /turf/open
-	var/slowdown = 0 //negative for faster, positive for slower
 
 	var/mutable_appearance/wet_overlay
 	var/postdig_icon_change = FALSE
