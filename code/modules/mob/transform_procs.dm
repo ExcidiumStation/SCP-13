@@ -602,3 +602,21 @@
 
 	//Not in here? Must be untested!
 	return 0
+
+//Transfers mind of mob
+/mob/scp_914_transfer(var/atom/movable/product)
+	if(ismob(product))
+		var/mob/M = product
+		M.key = key
+		return M
+	if(isobj(A))
+		var/obj/O = product
+		if(!control_object) //If you're not already possessing something...
+			name_archive = real_name
+			loc = O
+			real_name = O.name
+			name = O.name
+			reset_perspective(O)
+			control_object = O
+			return O
+	return src

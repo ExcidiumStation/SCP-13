@@ -130,18 +130,8 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
-
-/obj/item/toy/spinningtoy/scp914_fine()
-	var/list/candidates = list(/obj/machinery/the_singularitygen/tesla, /obj/machinery/the_singularitygen, /obj/item/am_containment)
-	var/candidate = pick(candidates)
-	var/obj/result = new candidate(loc)
-	return result
-
-/obj/item/toy/spinningtoy/scp914_vfine()
-	var/list/candidates = list(/obj/singularity/energy_ball, /obj/singularity, /obj/singularity/narsie)
-	var/candidate = pick(candidates)
-	var/obj/result = new candidate(loc)
-	return result
+	scp914_fine = list(/obj/machinery/the_singularitygen/tesla, /obj/machinery/the_singularitygen, /obj/item/am_containment)
+	scp914_vfine = list(/obj/singularity/energy_ball, /obj/singularity, /obj/singularity/narsie)
 
 /*
  * Toy gun: Why isnt this an /obj/item/gun?
@@ -344,6 +334,7 @@
 	var/active = FALSE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	attack_verb = list("robusted")
+	scp914_vfine = list(/obj/item/his_grace)
 
 /obj/item/toy/windupToolbox/attack_self(mob/user)
 	if(!active)
@@ -361,10 +352,6 @@
 /obj/item/toy/windupToolbox/scp914_fine()
 	var/candidate = pick(subtypesof(/obj/item/storage/toolbox))
 	var/obj/result = new candidate(loc)
-	return result
-
-/obj/item/toy/windupToolbox/scp914_vfine()
-	var/obj/result = new /obj/item/his_grace(loc)
 	return result
 
 /*
