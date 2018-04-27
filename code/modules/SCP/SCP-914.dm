@@ -53,10 +53,6 @@
 /obj/structure/closet/scp914/int
 	name = "intake booth"
 	desc = "Large copper booth labeled INTAKE."
-	//icon = 'icons/obj/scp914booth.dmi'
-	//icon_state = "intakeopen"
-	//icon_closed = "intake"
-	//icon_opened = "intakeopen"
 	anchored = 1
 
 /obj/structure/closet/scp914/int/Initialize()
@@ -65,10 +61,6 @@
 /obj/structure/closet/scp914/out
 	name = "output booth"
 	desc = "Large copper booth labeled OUTPUT."
-	//icon = 'icons/obj/scp914booth.dmi'
-	//icon_state = "outputopen"
-	//icon_closed = "output"
-	//icon_opened = "outputopen"
 	anchored = 1
 
 /obj/structure/closet/scp914/out/Initialize()

@@ -141,7 +141,7 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
 		if(1)
 			var/atom/movable/special = scp914_rough()
 			if(special)
-				return special
+				return scp_914_transfer(special)
 			else
 				var/atom/movable/choice = new parent_type
 				if(choice)
@@ -150,21 +150,21 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
 						var/atom/movable/atombychoice = new second_choice(loc)
 						qdel(choice)
 						if(atombychoice)
-							return atombychoice
+							return scp_914_transfer(atombychoice)
 		if(2)
 			var/atom/movable/special = scp914_coarse()
 			if(special)
-				return special
+				return scp_914_transfer(special)
 			else
 				var/choice = parent_type
 				if(choice)
 					var/atom/movable/atombychoice = new choice(loc)
 					if(atombychoice)
-						return atombychoice
+						return scp_914_transfer(atombychoice)
 		if(3)
 			var/atom/movable/special = scp914_one()
 			if(special)
-				return special
+				return scp_914_transfer(special)
 			else
 				var/list/choices = subtypesof(parent_type)
 				if(choices && choices.len > 0)
@@ -178,11 +178,11 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
 						if(choice)
 							var/atom/movable/atombychoice = new choice(loc)
 							if(atombychoice)
-								return atombychoice
+								return scp_914_transfer(atombychoice)
 		if(4)
 			var/atom/movable/special = scp914_fine()
 			if(special)
-				return special
+				return scp_914_transfer(special)
 			else
 				var/list/choices = subtypesof(src)
 				if(choices && choices.len > 0)
@@ -196,15 +196,15 @@ By default Rough/Very Fine will process item on Coarse/Fine twice, define coarse
 						if(choice)
 							var/atom/movable/atombychoice = new choice(loc)
 							if(atombychoice)
-								return atombychoice
+								return scp_914_transfer(atombychoice)
 		if(5) //TODO: Very Fine should give one SCP component to an output object
 			var/atom/movable/special = scp914_vfine()
 			if(special)
-				return special
+				return scp_914_transfer(special)
 			else
 				var/choice = pick(subtypesof(src))
 				if(choice)
 					var/atom/movable/atombychoice = new choice(loc)
 					if(atombychoice)
-						return atombychoice
+						return scp_914_transfer(atombychoice)
 	return

@@ -29,6 +29,11 @@
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/grab_state = 0
+	var/list/scp914_rough			//SCP914 recipe lists
+	var/list/scp914_coarse
+	var/list/scp914_oneone
+	var/list/scp914_fine
+	var/list/scp914_vfine
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
@@ -812,18 +817,42 @@
 		return FALSE
 	return TRUE
 
+//For transfering parameters from input atom to output atom
+/atom/movable/proc/scp_914_transfer(var/atom/movable/product)
+	return src
 
+//Prpcessing procs to define additional effects for each mode on SCP 914
 /atom/movable/proc/scp914_rough()
+	if(scp914_rough.len > 0)
+		var/atom/movable/result = new pick(scp914_rough)
+		if (result)
+			return result
 	return
 
 /atom/movable/proc/scp914_coarse()
+	if(scp914_coarse.len > 0)
+		var/atom/movable/result = new pick(scp914_coarse)
+		if (result)
+			return result
 	return
 
 /atom/movable/proc/scp914_one()
+	if(scp914_oneone.len > 0)
+		var/atom/movable/result = new pick(scp914_oneone)
+		if (result)
+			return result
 	return
 
 /atom/movable/proc/scp914_fine()
+	if(scp914_fine.len > 0)
+	var/atom/movable/result = new pick(scp914_fine)
+	if (result)
+		return result
 	return
 
 /atom/movable/proc/scp914_vfine()
+	if(scp914_vfine.len > 0)
+	var/atom/movable/result = new pick(scp914_vfine)
+	if (result)
+		return result
 	return
