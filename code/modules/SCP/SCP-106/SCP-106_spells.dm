@@ -26,7 +26,7 @@
 	AM.forceMove(pick(GLOB.larryrealm))
 	if(attached_spell)
 		attached_spell.attached_hand = null
-	qdel(src)
+	..()
 
 
 

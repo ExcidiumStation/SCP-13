@@ -109,6 +109,10 @@
 	name = "SCP-106"
 	scp_species = /datum/species/scp106
 
+/datum/antagonist/scp/doctor
+	name = "SCP-049"
+	scp_species = /datum/species/scp049
+	
 /datum/team/scp
 	var/scp_name = "Escapees"
 	var/core_objective = /datum/objective/escape
