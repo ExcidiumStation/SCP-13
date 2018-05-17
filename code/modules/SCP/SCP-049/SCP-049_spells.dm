@@ -51,5 +51,5 @@
 			continue
 		var/mob/living/carbon/human/H = target
 		if(do_after(user, raise_delay, target = H))
-		H.set_species(/datum/species/zombie/scp049_2)
-		H.revive(TRUE)
+			H.set_species(/datum/species/zombie/scp049_2)
+			H.revive(TRUE)

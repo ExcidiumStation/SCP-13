@@ -37,7 +37,10 @@
 	SSshuttle.emergencyCallTime = 20000 //have fun
 	for(var/i = 1 to pre_scps.len)
 		var/datum/mind/scp_mind = pre_scps[i]
-		scp_mind.add_antag_datum(scp_antag_type)
+		var/list/antagos = subtypesof(scp_antag_type)
+		var/datum/antagonist/scp/antag = pick(antagos)
+		scp_mind.add_antag_datum(antag)
+		antagos -= antag
 	return ..()
 
 /datum/game_mode/scp/OnNukeExplosion(off_station)

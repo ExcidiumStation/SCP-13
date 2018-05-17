@@ -6,11 +6,12 @@
 	action_icon_state = "gib"
 	nonabstract_req = 1
 	clothes_req = 0
+	charge_max = 600
 
 /obj/item/melee/touch_attack/touchby106
 	name = "\improper teleporting touch"
 	desc = "Teleports victim into your realm"
-	catchphrase = "ha...ha...hh..."
+	catchphrase = "none"
 	on_use_sound = 'sound/magic/disintegrate.ogg'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
