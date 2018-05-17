@@ -1,17 +1,8 @@
-//////////////////////////////////////////
-//				SCP 294					//
-//										//
-//	This is a child of a chemistry		//
-//	dispenser. Info of how it works at	//
-//	http://www.scp-wiki.net/scp-294		//
-//										//
-//////////////////////////////////////////
-
-/obj/machinery/chem_dispenser/scp_294
-	name = "\improper strange coffee machine"
-	desc = "It appears to be a standard coffee vending machine, the only noticeable difference being an entry touchpad with buttons corresponding to a Galactic Common QWERTY keyboard."
-	icon = 'icons/obj/scp.dmi'
-	icon_state = "294_bottom"
+/obj/machinery/chem_dispenser/chem_synthesizer //formerly SCP-294 made by mrty, but now only for testing purposes
+	name = "\improper debug chemical synthesizer"
+	desc = "If you see this, yell at adminbus."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "dispenser"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	working_state = null
@@ -23,33 +14,32 @@
 	)
 	var/mutable_appearance/top_overlay
 
-/obj/machinery/chem_dispenser/scp_294/Initialize()
+/obj/machinery/chem_dispenser/chem_synthesizer/Initialize()
 	. = ..()
 	GLOB.poi_list += src
-	top_overlay = mutable_appearance(icon, "294_top", layer = ABOVE_ALL_MOB_LAYER)
+	top_overlay = mutable_appearance(icon, "disp_beaker", layer = ABOVE_ALL_MOB_LAYER)
 	update_icon()
 
-
-/obj/machinery/chem_dispenser/scp_294/update_icon()
+/obj/machinery/chem_dispenser/chem_synthesizer/update_icon()
 	cut_overlays()
 	add_overlay(top_overlay)
 
-/obj/machinery/chem_dispenser/scp_294/Destroy()
+/obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
 	. = ..()
 	GLOB.poi_list -= src
 	QDEL_NULL(top_overlay)
 
-/obj/machinery/chem_dispenser/scp_294/display_beaker()
+/obj/machinery/chem_dispenser/chem_synthesizer/display_beaker()
 	return
 
-/obj/machinery/chem_dispenser/scp_294/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "scp_294", name, 390, 315, master_ui, state)
+		ui = new(user, src, ui_key, "chem_synthesizer", name, 390, 315, master_ui, state)
 		ui.open()
 
-/obj/machinery/chem_dispenser/scp_294/ui_act(action, params)
+/obj/machinery/chem_dispenser/chem_synthesizer/ui_act(action, params)
 	if(..())
 		return
 	update_icon()
@@ -79,17 +69,17 @@
 		if("makecup")
 			if(beaker)
 				return
-			beaker = new /obj/item/reagent_containers/food/drinks/sillycup(src)
-			visible_message("<span class='notice'>[src] dispenses a small, paper cup.</span>")
+			beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(src)
+			visible_message("<span class='notice'>[src] dispenses a bluespace beaker.</span>")
 
-/obj/machinery/chem_dispenser/scp_294/proc/find_reagent(input)
+/obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE
 	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
 		var/datum/reagent/R = GLOB.chemical_reagents_list[input]
-		if(R.can_synth)
+		if(R.can_synth_debug)
 			return input
 	else
 		for(var/X in GLOB.chemical_reagents_list)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-			if(R.can_synth && input == replacetext(lowertext(R.name), " ", ""))
+			if(R.can_synth_debug && input == replacetext(lowertext(R.name), " ", ""))
 				return X
