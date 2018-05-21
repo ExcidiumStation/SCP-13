@@ -14,7 +14,7 @@
 	if(!ishuman(owner.current) && scp_species)
 		if(!spawn_mob)
 			return
-		var/mob/new_mob = new spawn_mob(loc)
+		var/mob/new_mob = new spawn_mob(owner.loc)
 		new_mob.key = owner.current.key
 		var/mob/old_mob = owner
 		owner = new_mob
@@ -26,7 +26,7 @@
 
 /datum/antagonist/scp/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
-	to_chat(owner, "<span class='notice'>You are a [scp_team ? scp_team.syndicate_name : "scp"] entity!</span>")
+	to_chat(owner, "<span class='notice'>You are a [scp_team ? scp_team.scp_name : "scp"] entity!</span>")
 	owner.announce_objectives()
 	return
 
@@ -49,9 +49,6 @@
 	if(scp_team)
 		team_number = scp_team.members.Find(owner)
 	owner.current.forceMove(GLOB.scp_start[((team_number - 1) % GLOB.scp_start.len) + 1])
-
-/datum/antagonist/scp/leader/move_to_spawnpoint()
-	owner.current.forceMove(pick(GLOB.scp_leader_start))
 
 /datum/antagonist/scp/create_team(datum/team/scp/new_team)
 	if(!new_team)
@@ -97,14 +94,6 @@
 	name = "SCP-173"
 	spawn_mob = /mob/living/simple_animal/hostile/statue/scp173
 
-/datum/antagonist/scp/statue/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
-	to_chat(owner, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
-	to_chat(owner, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
-	to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
-	owner.announce_objectives()
-	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
-
 /datum/antagonist/scp/larry
 	name = "SCP-106"
 	scp_species = /datum/species/scp106
@@ -112,10 +101,10 @@
 /datum/antagonist/scp/doctor
 	name = "SCP-049"
 	scp_species = /datum/species/scp049
-	
+
 /datum/team/scp
-	var/scp_name = "Escapees"
-	var/core_objective = /datum/objective/escape
+	var/scp_name = "SCP objects"
+	var/core_objective = /datum/objective/hijack
 
 
 /datum/team/scp/proc/update_objectives()
@@ -126,8 +115,8 @@
 
 /datum/team/scp/proc/scps_dead()
 	for(var/I in members)
-		var/datum/mind/operative_mind = I
-		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
+		var/datum/mind/scp_mind = I
+		if(ishuman(scp_mind.current) && (scp_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
 
@@ -135,80 +124,8 @@
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate") //uh oh what to do
 	return S && (is_centcom_level(S.z) || is_transit_level(S.z))
 
-/datum/team/scp/proc/get_result()
-	var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME
-	var/disk_rescued = disk_rescued()
-	var/syndies_didnt_escape = !syndies_escaped()
-	var/station_was_nuked = SSticker.mode.station_was_nuked
-	var/nuke_off_station = SSticker.mode.nuke_off_station
-
-	if(nuke_off_station == NUKE_SYNDICATE_BASE)
-		return NUKE_RESULT_FLUKE
-	else if(!disk_rescued && station_was_nuked && !syndies_didnt_escape)
-		return NUKE_RESULT_NUKE_WIN
-	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
-		return NUKE_RESULT_NOSURVIVORS
-	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
-		return NUKE_RESULT_WRONG_STATION
-	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
-		return NUKE_RESULT_WRONG_STATION_DEAD
-	else if ((disk_rescued || evacuation) && operatives_dead())
-		return NUKE_RESULT_CREW_WIN_SYNDIES_DEAD
-	else if (disk_rescued)
-		return NUKE_RESULT_CREW_WIN
-	else if (!disk_rescued && operatives_dead())
-		return NUKE_RESULT_DISK_LOST
-	else if (!disk_rescued &&  evacuation)
-		return NUKE_RESULT_DISK_STOLEN
-	else
-		return	//Undefined result
-
-/datum/team/scp/roundend_report()
-	var/list/parts = list()
-	parts += "<span class='header'>[syndicate_name] Operatives:</span>"
-
-	switch(get_result())
-		if(NUKE_RESULT_FLUKE)
-			parts += "<span class='redtext big'>Humiliating Syndicate Defeat</span>"
-			parts += "<B>The crew of [station_name()] gave [syndicate_name] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
-		if(NUKE_RESULT_NUKE_WIN)
-			parts += "<span class='greentext big'>Syndicate Major Victory!</span>"
-			parts += "<B>[syndicate_name] operatives have destroyed [station_name()]!</B>"
-		if(NUKE_RESULT_NOSURVIVORS)
-			parts += "<span class='neutraltext big'>Total Annihilation</span>"
-			parts +=  "<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
-		if(NUKE_RESULT_WRONG_STATION)
-			parts += "<span class='redtext big'>Crew Minor Victory</span>"
-			parts += "<B>[syndicate_name] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!"
-		if(NUKE_RESULT_WRONG_STATION_DEAD)
-			parts += "<span class='redtext big'>[syndicate_name] operatives have earned Darwin Award!</span>"
-			parts += "<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"
-		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
-			parts += "<span class='redtext big'>Crew Major Victory!</span>"
-			parts += "<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>"
-		if(NUKE_RESULT_CREW_WIN)
-			parts += "<span class='redtext big'>Crew Major Victory</span>"
-			parts += "<B>The Research Staff has saved the disk and stopped the [syndicate_name] Operatives!</B>"
-		if(NUKE_RESULT_DISK_LOST)
-			parts += "<span class='neutraltext big'>Neutral Victory!</span>"
-			parts += "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name] Operatives!</B>"
-		if(NUKE_RESULT_DISK_STOLEN)
-			parts += "<span class='greentext big'>Syndicate Minor Victory!</span>"
-			parts += "<B>[syndicate_name] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!"
-		else
-			parts += "<span class='neutraltext big'>Neutral Victory</span>"
-			parts += "<B>Mission aborted!</B>"
-
-	var/text = "<br><span class='header'>The syndicate operatives were:</span>"
-
-	text += printplayerlist(members)
-	text += "<br>"
-	parts += text
-
-	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
-
 /datum/team/scp/antag_listing_name()
-	if(syndicate_name)
+	if(scp_name)
 		return "[scp_name]"
 	else
 		return "anomalous object"

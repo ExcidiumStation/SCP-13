@@ -45,12 +45,6 @@
 
 /datum/game_mode/scp/OnNukeExplosion(off_station)
 	..()
-	nukes_left--
-
-/datum/game_mode/scp/check_win()
-	if (nukes_left == 0)
-		return FALSE
-	return ..()
 
 /datum/game_mode/proc/are_scp_dead()
 	for(var/datum/mind/scp_mind in get_antag_minds(/datum/antagonist/scp))

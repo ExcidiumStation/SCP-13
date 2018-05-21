@@ -21,12 +21,12 @@
 	if(user.lying || user.handcuffed)
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
-	var/mob/living/M = target
-	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'>[M] is dead already.</span>")
+	var/mob/living/carbon/C = target
+	if(C.stat == DEAD)
+		to_chat(user, "<span class='warning'>[C] is dead already.</span>")
 		return
-	M.cured = TRUE //Mark them so they can be raised as zombie
-	M.death()
+	C.cured = TRUE //Mark them so they can be raised as zombie
+	C.death()
 	..()
 
 /obj/effect/proc_holder/spell/targeted/cure
@@ -46,7 +46,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/cure/cast(list/targets, mob/living/user)
-	for(target in targets)
+	for(var/target in targets)
 		if(!ishuman(target))
 			continue
 		var/mob/living/carbon/human/H = target
