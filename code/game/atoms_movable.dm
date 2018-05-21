@@ -725,35 +725,40 @@
 //Prpcessing procs to define additional effects for each mode on SCP 914
 /atom/movable/proc/scp914_rough()
 	if(scp914_rough.len > 0)
-		var/atom/movable/result = new pick(scp914_rough)
+		var/picking = pick(scp914_rough)
+		var/atom/movable/result = new picking
 		if (result)
 			return result
 	return
 
 /atom/movable/proc/scp914_coarse()
 	if(scp914_coarse.len > 0)
-		var/atom/movable/result = new pick(scp914_coarse)
+		var/picking = pick(scp914_coarse)
+		var/atom/movable/result = new picking
 		if (result)
 			return result
 	return
 
 /atom/movable/proc/scp914_one()
 	if(scp914_oneone.len > 0)
-		var/atom/movable/result = new pick(scp914_oneone)
+		var/picking = pick(scp914_oneone)
+		var/atom/movable/result = new picking
 		if (result)
 			return result
 	return
 
 /atom/movable/proc/scp914_fine()
 	if(scp914_fine.len > 0)
-	var/atom/movable/result = new pick(scp914_fine)
-	if (result)
-		return result
+		var/picking = pick(scp914_fine)
+		var/atom/movable/result = new picking
+		if (result)
+			return result
 	return
 
 /atom/movable/proc/scp914_vfine()
 	if(scp914_vfine.len > 0)
-	var/atom/movable/result = new pick(scp914_vfine)
-	if (result)
-		return result
+		var/picking = pick(scp914_vfine)
+		var/atom/movable/result = new picking
+		if (result)
+			return result
 	return

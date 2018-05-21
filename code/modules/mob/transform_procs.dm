@@ -609,7 +609,7 @@
 		var/mob/M = product
 		M.key = key
 		return M
-	if(isobj(A))
+	if(isobj(product))
 		var/obj/O = product
 		if(!control_object) //If you're not already possessing something...
 			name_archive = real_name

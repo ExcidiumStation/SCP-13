@@ -22,11 +22,12 @@
 /datum/species/scp049/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
 		touch = new /obj/effect/proc_holder/spell/targeted/touch/kill
 		raise = new /obj/effect/proc_holder/spell/targeted/cure
-		C.mind.AddSpell(touch)
-		C.mind.AddSpell(raise)
-		C.equipOutfit(/datum/outfit/plaguedoctor)
+		H.mind.AddSpell(touch)
+		H.mind.AddSpell(raise)
+		H.equipOutfit(/datum/outfit/plaguedoctor)
 
 /datum/species/scp049/on_species_loss(mob/living/carbon/C)
 	if(touch)

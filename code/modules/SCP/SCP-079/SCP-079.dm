@@ -2,10 +2,10 @@
 	name = "crying man"
 	desc = "It's a long, thin, crying... man, for some reason he's hiding his face."
 	real_name = "SCP-079"
-	icon = 'icons/mob/scp.dmi'
-	icon_state = "079"
-	icon_living = "079"
-	icon_dead = "079_d"
+	icon = 'icons/mob/penguins.dmi'
+	icon_state = "penguin"
+	icon_living = "penguin"
+	icon_dead = "penguin_dead"
 	gender = NEUTER
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_emote = list("yell")
@@ -74,7 +74,7 @@
 
 /mob/living/simple_animal/scp079/proc/returndormant()
 	harm_intent_damage = initial(harm_intent_damage)
-	speed = intial(speed)
+	speed = initial(speed)
 	status_flags &= ~GODMODE
 	dormant = TRUE
 	TakeComponent(/datum/component/break_through)

@@ -14,7 +14,7 @@
 	if(!ishuman(owner.current) && scp_species)
 		if(!spawn_mob)
 			return
-		var/mob/new_mob = new spawn_mob(owner.loc)
+		var/mob/new_mob = new spawn_mob(owner.current.loc)
 		new_mob.key = owner.current.key
 		var/mob/old_mob = owner
 		owner = new_mob
