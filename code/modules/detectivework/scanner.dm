@@ -11,7 +11,8 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
@@ -58,6 +59,7 @@
 	scanning = 0
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
+	. = ..()
 	scan(A, user)
 	return FALSE
 

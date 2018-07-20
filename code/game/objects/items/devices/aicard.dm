@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
@@ -17,7 +17,7 @@
 	return BRUTELOSS
 
 /obj/item/aicard/afterattack(atom/target, mob/user, proximity)
-	..()
+	. = ..()
 	if(!proximity || !target)
 		return
 	if(AI) //AI is on the card, implies user wants to upload it.

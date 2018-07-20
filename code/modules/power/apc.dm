@@ -50,7 +50,6 @@
 	desc = "A control terminal for the area's electrical systems."
 
 	icon_state = "apc0"
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	req_access = null
 	max_integrity = 200
@@ -117,6 +116,21 @@
 
 /obj/machinery/power/apc/highcap/fifteen_k
 	cell_type = /obj/item/stock_parts/cell/high/plus
+	
+/obj/machinery/power/apc/auto_name
+	auto_name = TRUE
+	
+/obj/machinery/power/apc/auto_name/north
+	dir = NORTH
+	
+/obj/machinery/power/apc/auto_name/south
+	dir = SOUTH
+
+/obj/machinery/power/apc/auto_name/east
+	dir = EAST
+	
+/obj/machinery/power/apc/auto_name/west
+	dir = WEST
 
 /obj/machinery/power/apc/get_cell()
 	return cell
@@ -1257,17 +1271,20 @@
 
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)
-	if(cell)
-		cell.emp_act(severity)
-	if(occupier)
-		occupier.emp_act(severity)
+	. = ..()
+	if (!(. & EMP_PROTECT_CONTENTS))
+		if(cell)
+			cell.emp_act(severity)
+		if(occupier)
+			occupier.emp_act(severity)
+	if(. & EMP_PROTECT_SELF)
+		return
 	lighting = 0
 	equipment = 0
 	environ = 0
 	update_icon()
 	update()
 	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
-	..()
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()

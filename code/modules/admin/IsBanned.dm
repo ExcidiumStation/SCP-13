@@ -79,7 +79,8 @@
 			cidquery = " OR computerid = '[computer_id]' "
 
 		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, id, round_id FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
-		if(!query_ban_check.Execute())
+		if(!query_ban_check.Execute(async = TRUE))
+			qdel(query_ban_check)
 			return
 		while(query_ban_check.NextRow())
 			var/pckey = query_ban_check.item[1]
@@ -117,7 +118,9 @@
 
 
 			log_access("Failed Login: [key] [computer_id] [address] - Banned (#[banid]) [.["reason"]]")
+			qdel(query_ban_check)
 			return .
+		qdel(query_ban_check)
 
 	var/list/ban = ..()	//default pager ban stuff
 	if (ban)

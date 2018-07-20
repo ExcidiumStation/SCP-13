@@ -188,9 +188,12 @@
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
 	. = ..()
 	name = fried.name //We'll determine the other stuff when it's actually removed
-	icon = fried.icon
-	overlays = fried.copy_overlays()
-	icon_state = fried.icon_state
+	appearance = fried.appearance
+	layer = initial(layer)
+	plane = initial(plane)
+	lefthand_file = fried.lefthand_file
+	righthand_file = fried.righthand_file
+	item_state = fried.item_state
 	desc = fried.desc
 	w_class = fried.w_class
 	slowdown = fried.slowdown
@@ -206,6 +209,17 @@
 		qdel(fried)
 	else
 		fried.forceMove(src)
+		trash = fried
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
+	if(trash)
+		QDEL_NULL(trash)
+	. = ..()
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/On_Consume(mob/living/eater)
+	if(trash)
+		QDEL_NULL(trash)
+	..()
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)

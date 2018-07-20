@@ -287,7 +287,7 @@
 		oldpatient = patient
 		soft_reset()
 
-	if(!patient)
+	if(QDELETED(patient))
 		if(!shut_up && prob(1))
 			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/mradar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/mcatch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/msurgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/mflies.ogg',"Delicious!" = 'sound/voice/mdelicious.ogg')
 			var/message = pick(messagevoice)
@@ -357,7 +357,7 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if (H.wear_suit && H.head && is_type_in_typecache(H.wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(H.wear_suit, GLOB.typecache_clothing))
+		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
 			var/obj/item/clothing/CS = H.wear_suit
 			var/obj/item/clothing/CH = H.head
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)

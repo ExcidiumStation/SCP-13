@@ -43,6 +43,13 @@
 	dir = 5
 	},
 /area/shuttle/caravan/pirate)
+"eL" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 10;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "fh" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -73,7 +80,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/shuttle/caravan/pirate)
 "hh" = (
-/mob/living/simple_animal/hostile/pirate,
+/mob/living/simple_animal/hostile/pirate{
+	environment_smash = 0
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "hI" = (
@@ -107,16 +116,12 @@
 /area/shuttle/caravan/pirate)
 "iX" = (
 /obj/structure/table,
-/obj/item/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/laser,
 /obj/machinery/door/window/southleft{
 	base_state = "right";
 	icon_state = "right";
 	name = "Weapon Storage"
 	},
+/obj/item/gun/energy/laser,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -134,15 +139,10 @@
 /area/shuttle/caravan/pirate)
 "jo" = (
 /obj/structure/table,
-/obj/item/grenade/smokebomb{
-	pixel_x = -4
-	},
-/obj/item/grenade/smokebomb{
-	pixel_x = 2
-	},
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
+/obj/item/ammo_box/a40mm,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -282,7 +282,12 @@
 /obj/machinery/door/window/southleft{
 	name = "Weapon Storage"
 	},
-/obj/item/gun/ballistic/shotgun/automatic/combat,
+/obj/item/grenade/smokebomb{
+	pixel_x = -4
+	},
+/obj/item/grenade/smokebomb{
+	pixel_x = 2
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -390,6 +395,12 @@
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
+"tM" = (
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/caravan/pirate)
 "ul" = (
 /obj/structure/table,
 /obj/item/retractor,
@@ -448,8 +459,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -670,7 +679,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security,
+/obj/machinery/door/airlock/security{
+	name = "Armory"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "II" = (
@@ -853,6 +864,13 @@
 /obj/item/melee/classic_baton,
 /turf/open/floor/plasteel/darkred/corner,
 /area/shuttle/caravan/pirate)
+"Yj" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 9;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "Yo" = (
 /obj/structure/table,
 /obj/item/storage/box/lethalshot,
@@ -913,7 +931,7 @@ Jv
 "}
 (3,1,1) = {"
 Jv
-oL
+Yj
 af
 qX
 yt
@@ -923,7 +941,7 @@ RK
 FM
 jh
 af
-oL
+eL
 Jv
 "}
 (4,1,1) = {"
@@ -980,7 +998,7 @@ su
 Ag
 af
 jo
-su
+tM
 sr
 af
 af

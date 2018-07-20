@@ -11,12 +11,11 @@ Quartermaster
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/quartermaster
 
-	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
-	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_VAULT)
+	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_VAULT)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
@@ -28,6 +27,8 @@ Quartermaster
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard
+
+	chameleon_extras = /obj/item/stamp/qm
 
 /*
 Cargo Technician
@@ -42,7 +43,6 @@ Cargo Technician
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
-	antag_rep = 14
 
 	outfit = /datum/outfit/job/cargo_tech
 
@@ -71,7 +71,6 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/miner
 
@@ -79,7 +78,7 @@ Shaft Miner
 	minimal_access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/miner
-	name = "Shaft Miner (Lavaland)"
+	name = "Shaft Miner"
 	jobtype = /datum/job/mining
 
 	belt = /obj/item/pda/shaftminer
@@ -100,13 +99,10 @@ Shaft Miner
 	duffelbag = /obj/item/storage/backpack/duffelbag
 	box = /obj/item/storage/box/survival_mining
 
-/datum/outfit/job/miner/asteroid
-	name = "Shaft Miner (Asteroid)"
-	uniform = /obj/item/clothing/under/rank/miner
-	shoes = /obj/item/clothing/shoes/workboots
+	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
 /datum/outfit/job/miner/equipped
-	name = "Shaft Miner (Lavaland + Equipment)"
+	name = "Shaft Miner (Equipment)"
 	suit = /obj/item/clothing/suit/hooded/explorer
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
@@ -128,14 +124,10 @@ Shaft Miner
 		var/obj/item/clothing/suit/hooded/S = H.wear_suit
 		S.ToggleHood()
 
-/datum/outfit/job/miner/equipped/asteroid
-	name = "Shaft Miner (Asteroid + Equipment)"
-	uniform = /obj/item/clothing/under/rank/miner
-	shoes = /obj/item/clothing/shoes/workboots
+/datum/outfit/job/miner/equipped/hardsuit
+	name = "Shaft Miner (Equipment + Hardsuit)"
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
-
-
 
 /*
 Bartender
@@ -150,7 +142,6 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	antag_rep = 14
 
 	outfit = /datum/outfit/job/bartender
 
@@ -184,7 +175,6 @@ Cook
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/cook
 
@@ -237,7 +227,6 @@ Botanist
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/botanist
 
@@ -277,7 +266,6 @@ Janitor
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/global/janitors = 0
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/janitor
 

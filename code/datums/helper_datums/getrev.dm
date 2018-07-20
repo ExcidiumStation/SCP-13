@@ -13,6 +13,11 @@
 		date = unix2date(text2num(logs[5]))
 		commit = logs[2]
 		log_world("[commit]: [date]")
+	else
+		log_world("Unable to read git logs, revision information not available")
+		originmastercommit = commit = "Unknown"
+		date = unix2date(world.timeofday)
+		return
 	logs = world.file2list(".git/logs/refs/remotes/origin/master")
 	if(logs.len)
 		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
@@ -23,8 +28,8 @@
 			if(line)
 				var/datum/tgs_revision_information/test_merge/tm = line
 				var/tmcommit = tm.commit
-				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[line]", "[tmcommit]"))
+				log_world("Test merge active of PR #[tm.number] commit [tmcommit]")
+				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[tm.number]", "[tmcommit]"))
 		if(originmastercommit)
 			log_world("Based off origin/master commit [originmastercommit]")
 	else if(originmastercommit)

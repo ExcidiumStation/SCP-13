@@ -19,7 +19,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	can_unwrench = TRUE
 
-	var/on = FALSE
 	var/transfer_rate = MAX_TRANSFER_RATE
 
 	var/frequency = 0
@@ -28,7 +27,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
-	
+
 /obj/machinery/atmospherics/components/binary/volume_pump/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -56,7 +55,7 @@ Thus, the two variables affect pump operation are set in New():
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
-	
+
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	if(!is_operational())
 		icon_state = "volpump_off"
@@ -80,7 +79,7 @@ Thus, the two variables affect pump operation are set in New():
 	if((input_starting_pressure < 0.01) || (output_starting_pressure > 9000))
 		return
 
-	var/transfer_ratio = min(1, transfer_rate/air1.volume)
+	var/transfer_ratio = transfer_rate/air1.volume
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 

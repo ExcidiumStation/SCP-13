@@ -153,13 +153,15 @@
 	to_chat(user, "<span class='danger'>[src] emits a blinding light!</span>")
 
 /obj/item/assembly/flash/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(!try_use_flash())
-		return FALSE
+		return
 	AOE_flash()
 	burn_out()
-	. = ..()
 
-/obj/item/assembly/flash/activate()//AOE flash on signal recieved
+/obj/item/assembly/flash/activate()//AOE flash on signal received
 	if(!..())
 		return
 	AOE_flash()
@@ -208,7 +210,7 @@
 
 /obj/item/assembly/flash/armimplant
 	name = "photon projector"
-	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocals fix the flashbulb if it ever burns out."
+	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocols fix the flashbulb if it ever burns out."
 	var/flashcd = 20
 	var/overheat = 0
 	var/obj/item/organ/cyberimp/arm/flash/I = null

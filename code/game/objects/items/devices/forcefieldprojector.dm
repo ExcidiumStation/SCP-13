@@ -5,7 +5,7 @@
 	icon_state = "signmaker_engi"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -17,6 +17,7 @@
 	var/field_distance_limit = 7
 
 /obj/item/forcefield/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(!check_allowed_items(target, 1))
 		return
 	if(istype(target, /obj/structure/projected_forcefield))

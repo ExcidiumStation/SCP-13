@@ -178,10 +178,10 @@ There are several things that need to be remembered:
 
 	if(!gloves && bloody_hands)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
-		if(get_num_arms() < 2)
-			if(has_left_hand())
+		if(get_num_arms(FALSE) < 2)
+			if(has_left_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_left"
-			else if(has_right_hand())
+			else if(has_right_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_right"
 
 		overlays_standing[GLOVES_LAYER] = bloody_overlay
@@ -262,7 +262,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_shoes()
 	remove_overlay(SHOES_LAYER)
 
-	if(get_num_legs() <2)
+	if(get_num_legs(FALSE) <2)
 		return
 
 	if(client && hud_used)
@@ -567,9 +567,7 @@ generate/load female uniform sprites matching all previously decided variables
 		if(4) //even = right hands
 			return list("x" = 0, "y" = 16)
 		else //No offsets or Unwritten number of hands
-			return list("x" = 0, "y" = 0)
-
-
+			return list("x" = 0, "y" = 0)//Handle held offsets
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()

@@ -17,7 +17,6 @@ Chief Medical Officer
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_MEDICAL
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/cmo
 
@@ -47,6 +46,16 @@ Chief Medical Officer
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
+	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
+
+/datum/outfit/job/cmo/hardsuit
+	name = "Chief Medical Officer (Hardsuit)"
+
+	mask = /obj/item/clothing/mask/breath
+	suit = /obj/item/clothing/suit/space/hardsuit/medical
+	suit_store = /obj/item/tank/internals/oxygen
+	r_pocket = /obj/item/flashlight/pen
+
 /*
 Medical Doctor
 */
@@ -60,7 +69,6 @@ Medical Doctor
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/doctor
 
@@ -83,6 +91,8 @@ Medical Doctor
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
+	chameleon_extras = /obj/item/gun/syringe
+
 /*
 Chemist
 */
@@ -98,7 +108,6 @@ Chemist
 	selection_color = "#ffeef0"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/chemist
 
@@ -119,6 +128,8 @@ Chemist
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
+	chameleon_extras = /obj/item/gun/syringe
+
 /*
 Geneticist
 */
@@ -134,7 +145,6 @@ Geneticist
 	selection_color = "#ffeef0"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/geneticist
 
@@ -171,7 +181,6 @@ Virologist
 	selection_color = "#ffeef0"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/virologist
 

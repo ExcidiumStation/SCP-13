@@ -633,6 +633,13 @@
 	required_catalysts = list("enzyme" = 5)
 	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
 
+/datum/chemical_reaction/peppermint_patty
+	name = "Peppermint Patty"
+	id = "peppermint_patty"
+	results = list("peppermint_patty" = 10)
+	required_reagents = list("hot_coco" = 6, "creme_de_cacao" = 1, "creme_de_menthe" = 1, "vodka" = 1, "menthol" = 1)
+	mix_message = "The coco turns mint green just as the strong scent hits your nose."
+
 /datum/chemical_reaction/alexander
 	name = "Alexander"
 	id = "alexander"
@@ -663,3 +670,21 @@
 	results = list("mojito" = 5)
 	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
 
+/datum/chemical_reaction/fernet_cola
+	name = "Fernet Cola"
+	id = "fernet_cola"
+	results = list("fernet_cola" = 2)
+	required_reagents = list("fernet" = 1, "cola" = 1)
+
+
+/datum/chemical_reaction/fanciulli
+	name = "Fanciulli"
+	id = "fanciulli"
+	results = list("fanciulli" = 2)
+	required_reagents = list("manhattan" = 1, "fernet" = 1)
+
+/datum/chemical_reaction/branca_menta
+	name = "Branca Menta"
+	id = "branca_menta"
+	results = list("branca_menta" = 3)
+	required_reagents = list("fernet" = 1, "creme_de_menthe" = 1, "ice" = 1)
