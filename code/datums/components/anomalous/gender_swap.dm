@@ -54,6 +54,6 @@
 /datum/component/gender_swap/proc/swap_finish(mob/living/victim)
 	var/obj/item/A = parent
 	to_chat(victim, "<span class='warning'>The burning begins to fade, and you feel your hand relax it's grip on the [A].</span>")
-	A.flags_1 &= ~NODROP_1
+	A.item_flags &= ~NODROP
 	A.w_class = old_wclass
 	victims[victim] = world.time
