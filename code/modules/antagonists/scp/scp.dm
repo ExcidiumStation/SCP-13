@@ -122,7 +122,7 @@
 
 /datum/team/scp/proc/scps_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate") //uh oh what to do
-	return S && (is_centcom_level(S.z) || is_transit_level(S.z))
+	return S && (is_centcom_level(S.z) || is_reserved_level(S.z))
 
 /datum/team/scp/antag_listing_name()
 	if(scp_name)

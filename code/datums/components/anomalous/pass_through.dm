@@ -8,7 +8,7 @@
 		CRASH("Attempt to initialize component on non-movatom, aborting!")
 	//var/atom/movable/AM = parent
 	//AM.pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|PASSBLOB|PASSMOB|PASSCLOSEDTURF|LETPASSTHROW PASS FLAGS was a MISTAKE
-	RegisterSignal(COMSIG_MOVABLE_COLLIDE, .proc/passing_through)
+	RegisterSignal(COMSIG_MOVABLE_BUMP, .proc/passing_through)
 
 /datum/component/pass_through/proc/passing_through(var/atom/A)
 	if(passing) //Prevent abuse

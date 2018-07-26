@@ -17,7 +17,7 @@
 		return FALSE
 	var/mob/living/ML = victim
 	var/obj/item/A = parent
-	A.flags_1 |= NODROP_1
+	A.item_flags |= NODROP
 	A.w_class = WEIGHT_CLASS_BULKY
 	var/which_hand = BODY_ZONE_PRECISE_L_HAND
 	if(!(ML.active_hand_index % 2))

@@ -6,7 +6,7 @@
 	if(!ismob(parent))
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("Attempt to initialize component on non-movatom, aborting!")
-	RegisterSignal(COMSIG_MOVABLE_COLLIDE, .proc/breaking_through)
+	RegisterSignal(COMSIG_MOVABLE_BUMP, .proc/breaking_through)
 
 /datum/component/break_through/proc/breaking_through(var/atom/A)
 	if(passing) //Prevent abuse
