@@ -1,36 +1,3 @@
-/obj/effect/proc_holder/spell/targeted/touch/teleport_victim
-	name = "Teleport Victim"
-	desc = "Charges your hand with dark energy that can be used to teleport victims into your realm."
-	hand_path = "/obj/item/melee/touch_attack/touchby106"
-	cooldown_min = 20
-	action_icon_state = "gib"
-	nonabstract_req = 1
-	clothes_req = 0
-	charge_max = 600
-
-/obj/item/melee/touch_attack/touchby106
-	name = "\improper teleporting touch"
-	desc = "Teleports victim into your realm"
-	catchphrase = "none"
-	on_use_sound = 'sound/magic/disintegrate.ogg'
-	icon_state = "disintegrate"
-	item_state = "disintegrate"
-
-//TODO: Realm and shit
-/obj/item/melee/touch_attack/touchby106/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
-		return
-	var/atom/movable/AM = target
-	do_sparks(4, FALSE, AM.loc)
-	user.say(catchphrase)
-	playsound(get_turf(user), on_use_sound,50,1)
-	AM.forceMove(pick(GLOB.larryrealm))
-	if(attached_spell)
-		attached_spell.attached_hand = null
-	..()
-
-
-
 /obj/effect/proc_holder/spell/teleport
 	name = "Plane Shift"
 	desc = "Changes current plane of existance."
