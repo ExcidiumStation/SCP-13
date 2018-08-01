@@ -8,3 +8,4 @@
 	icon_dead = "josie_dead"
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
