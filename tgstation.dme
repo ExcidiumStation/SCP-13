@@ -2454,6 +2454,8 @@
 #include "code\modules\SCP\SCP-099.dm"
 #include "code\modules\SCP\SCP-113.dm"
 #include "code\modules\SCP\SCP-173.dm"
+#inculde "code\modules\SCP\SCP-294.dm"
+#include "code\modules\SCP\SCP-529.dm"
 #include "code\modules\SCP\SCP-914.dm"
 #include "code\modules\SCP\SCP-049\SCP-049-2.dm"
 #include "code\modules\SCP\SCP-049\SCP-049.dm"
