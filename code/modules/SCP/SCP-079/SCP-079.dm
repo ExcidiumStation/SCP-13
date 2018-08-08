@@ -1,12 +1,13 @@
 /mob/living/simple_animal/scp079
 	name = "crying man"
-	desc = "It's a long, thin, crying... man, for some reason he's hiding his face."
+	desc = "It's a long, thin, crying... creature, for some reason it's hiding face."
 	real_name = "SCP-079"
 	icon = 'icons/mob/penguins.dmi'
 	icon_state = "penguin"
 	icon_living = "penguin"
 	icon_dead = "penguin_dead"
 	gender = NEUTER
+
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_emote = list("yell")
 	response_help  = "pushes"
@@ -23,6 +24,7 @@
 	obj_damage = 60
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
 
 	var/enrage_speed = -3
 	var/enrage_damage = 50
@@ -33,7 +35,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
 /mob/living/simple_animal/scp079/Initialize()
 	. = ..()

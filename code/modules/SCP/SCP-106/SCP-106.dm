@@ -11,6 +11,7 @@
 	health = 1000
 	spacewalk = TRUE
 	healable = 0
+	speed = 2
 	speak_emote = list("whispers")
 	emote_hear = list("wails.","laughs.")
 	response_help  = "tries to touch"
@@ -35,8 +36,8 @@
 	gold_core_spawnable = NO_SPAWN
 	var/touch_cooldown = 0
 	var/scp106_spells_list = list(/obj/effect/proc_holder/spell/teleport)
-	
-/mob/living/simple_animal/hostile/construct/Initialize()
+
+/mob/living/simple_animal/larry/Initialize()
 	. = ..()
 	update_health_hud()
 	AddComponent(/datum/component/pass_through)
@@ -46,8 +47,8 @@
 		AddSpell(the_spell)
 		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
 		var/pos = 2+spellnum*31
-		if(construct_spells.len >= 4)
-			pos -= 31*(construct_spells.len - 4)
+		if(scp106_spells_list.len >= 4)
+			pos -= 31*(scp106_spells_list.len - 4)
 		S.action.button.screen_loc = "6:[pos],4:-2"
 		S.action.button.moved = "6:[pos],4:-2"
 		spellnum++
@@ -57,40 +58,9 @@
 		return
 	if(ismovableatom(A) && Adjacent(A))
 		if(touch_cooldown <= world.time && !stat)
-			var/atom/movable/AM = target
-			do_sparks(4, FALSE, AM.loc)
-			AM.forceMove(pick(GLOB.larryrealm))
-			to_chat(src, "<span class='danger'><B>You teleport [AM] into your realm.</span></B>")
+			do_sparks(4, FALSE, A.loc)
+			A.forceMove(pick(GLOB.larryrealm))
+			to_chat(src, "<span class='danger'><B>You teleport [A] into your realm.</span></B>")
 			touch_cooldown = world.time + 50
 		else
 			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 5 seconds between teleports.</span></B>")
-
-
-/mob/living/simple_animal/larry/attackby(obj/item/O, mob/user, params)
-	O.acid_act(10,50)
-
-/mob/living/simple_animal/larry/attack_hand(mob/living/carbon/human/M)
-	..()
-	switch(M.a_intent)
-		if("help")
-			if (health > 0)
-				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
-				M.acid_act(10,10)
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-
-		if("grab")
-			to_chat(M, "<span class='notice'>Your hands went deep into [src], like it's body is a liquid!</span>")
-			to_chat(M, "<span class='danger'>IT BURNS!</span>")
-			M.acid_act(15,50)
-
-		if("harm", "disarm")
-			if(M.has_trait(TRAIT_PACIFISM))
-				to_chat(M, "<span class='notice'>You don't want to hurt [src]!</span>")
-				return
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
-			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			to_chat(M, "<span class='danger'>IT BURNS!</span>")
-			playsound(loc, attacked_sound, 25, 1, -1)
-			M.acid_act(10,50)
-			return TRUE
