@@ -68,7 +68,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/larry/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
+/mob/living/simple_animal/larry/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
 		temp_damage = 0
@@ -90,12 +90,8 @@
 		Proj.on_hit(src)
 		if(speed < 3)
 			speed = 3
-			addtimer(CALLBACK(src, .proc/return_speed), 10)
+			addtimer(VARSET_CALLBACK(src, speed, 2), 10)
 	return 0
-
-/mob/living/simple_animal/larry/return_speed()
-	if(speed > 2)
-		speed = 2
 
 /mob/living/simple_animal/larry/ex_act(severity, target, origin)
 	return 0

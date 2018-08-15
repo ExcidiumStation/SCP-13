@@ -35,7 +35,7 @@
 	deathmessage = "slowly vanishes."
 	gold_core_spawnable = NO_SPAWN
 	var/touch_cooldown = 0
-	var/scp106_spells_list = list(/obj/effect/proc_holder/spell/teleport)
+	var/list/scp106_spells_list = list(/obj/effect/proc_holder/spell/teleport)
 
 /mob/living/simple_animal/larry/Initialize()
 	. = ..()
