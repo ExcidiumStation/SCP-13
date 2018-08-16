@@ -589,6 +589,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Engineering Storage"
 	icon_state = "engi_storage"
 
+/area/engine/storage_shared
+	name = "Shared Engineering Storage"
+	icon_state = "engi_storage"
+
 /area/engine/transit_tube
 	name = "Transit Tube"
 	icon_state = "transit_tube"
@@ -1034,6 +1038,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/mixing
 	name = "Toxins Mixing Lab"
 	icon_state = "toxmix"
+
+/area/science/mixing/chamber
+	name = "Toxins Mixing Chamber"
+	icon_state = "toxmix"
+	valid_territory = FALSE
 
 /area/science/misc_lab
 	name = "Testing Lab"

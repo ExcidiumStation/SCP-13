@@ -1,3 +1,4 @@
+#define CONFUSION_STACK_MAX_MULTIPLIER 2
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
@@ -103,12 +104,14 @@
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
-	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
 		if(M.flash_act(1, 1))
-			M.confused += power
+			if(M.confused < power)
+				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+				M.confused += min(power, diff)
 			if(user)
 				terrible_conversion_proc(M, user)
 				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
@@ -125,7 +128,8 @@
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
-			M.confused += power
+			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+			M.confused += min(power, diff)
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -135,10 +139,11 @@
 		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
-		add_logs(user, R, "flashed", src)
+		log_combat(user, R, "flashed", src)
 		update_icon(1)
-		M.Knockdown(rand(80,120))
-		R.confused += 5
+		R.Knockdown(rand(80,120))
+		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return TRUE
